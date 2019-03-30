@@ -4,5 +4,6 @@
     <string name="low">LOW</string>
     <string name="mid">MID</string>
     <string name="height">HEIGHT</string>
-    <string name="title">Title</string>
+    <string name="title">Task</string>
+    <string name="deadlineText">deadline</string>
 </resources>
