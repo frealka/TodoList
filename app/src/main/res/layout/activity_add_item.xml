@@ -13,7 +13,7 @@
             android:inputType="textPersonName"
             android:hint="@string/title"
             android:ems="18"
-            android:id="@+id/editText4" android:layout_marginStart="8dp"
+            android:id="@+id/taskEditText" android:layout_marginStart="8dp"
             app:layout_constraintStart_toStartOf="parent" android:layout_marginTop="8dp"
             app:layout_constraintTop_toTopOf="parent" android:layout_marginEnd="8dp"
             app:layout_constraintEnd_toEndOf="parent"/>
@@ -25,7 +25,7 @@
             android:ems="12"
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
-            android:id="@+id/editText3"
+            android:id="@+id/contentEditText"
             android:layout_marginEnd="8dp"
             app:layout_constraintEnd_toEndOf="parent" android:layout_marginStart="8dp"
             app:layout_constraintStart_toStartOf="parent"
@@ -37,20 +37,20 @@
             app:layout_constraintEnd_toStartOf="@+id/declineImageButton" android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp" app:layout_constraintBottom_toBottomOf="parent"
             android:background="@drawable/round_green_shape"
-            android:scaleType="fitXY"/>
+            android:scaleType="fitXY" android:onClick="onAccept"/>
     <ImageButton
             android:layout_height="50dp" app:srcCompat="@drawable/decline_icon"
             android:id="@+id/declineImageButton"
             android:layout_width="50dp" android:scaleType="fitXY" app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginEnd="8dp" android:layout_marginBottom="8dp"
             android:background="@drawable/round_red_shape"
-            app:layout_constraintBottom_toBottomOf="parent"/>
+            app:layout_constraintBottom_toBottomOf="parent" android:onClick="onDecline"/>
     <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:hint="@string/deadlineText"
             android:id="@+id/deadlineEditText" android:layout_marginTop="8dp"
-            app:layout_constraintTop_toBottomOf="@+id/editText4" app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/taskEditText" app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="16dp"/>
 
     <com.savvyapps.togglebuttonlayout.ToggleButtonLayout
@@ -59,8 +59,9 @@
             android:layout_height="wrap_content"
             app:selectedColor="?attr/colorAccent"
             app:menu="@menu/toggle"
+            app:multipleSelection="false"
             android:layout_marginTop="8dp"
-            app:layout_constraintTop_toBottomOf="@+id/editText3" app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/contentEditText" app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginEnd="8dp" app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="8dp"/>
 </android.support.constraint.ConstraintLayout>
