@@ -6,4 +6,10 @@
     <string name="height">HEIGHT</string>
     <string name="title">Task</string>
     <string name="deadlineText">deadline</string>
+
+    <string-array name="priorities">
+        <item>"low"</item>
+        <item>"mid"</item>
+        <item>"height"</item>
+    </string-array>
 </resources>

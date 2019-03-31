@@ -30,34 +30,6 @@
             app:layout_constraintEnd_toEndOf="parent" android:layout_marginStart="8dp"
             app:layout_constraintStart_toStartOf="parent"
             android:layout_marginTop="8dp" app:layout_constraintTop_toBottomOf="@+id/deadlineEditText"/>
-    <Button
-            android:id="@+id/lowPriorityButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editText3"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="16dp"
-            android:text="@string/low"
-            android:background="@drawable/round_green_shape"/>
-    <Button
-            android:text="@string/mid"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/midPriorityButton" app:layout_constraintEnd_toStartOf="@+id/heightPriorityButton"
-            android:layout_marginEnd="8dp" app:layout_constraintStart_toEndOf="@+id/lowPriorityButton"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="16dp" app:layout_constraintTop_toBottomOf="@+id/editText3"
-            android:background="@drawable/round_orange_shape"/>
-    <Button
-            android:text="@string/height"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/heightPriorityButton" app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginEnd="8dp"
-            android:layout_marginTop="16dp"
-            app:layout_constraintTop_toBottomOf="@+id/editText3"
-            android:background="@drawable/round_red_shape"/>
     <ImageButton
             android:layout_width="50dp"
             android:layout_height="50dp" app:srcCompat="@drawable/approved_icon"
@@ -80,4 +52,15 @@
             android:id="@+id/deadlineEditText" android:layout_marginTop="8dp"
             app:layout_constraintTop_toBottomOf="@+id/editText4" app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="16dp"/>
+
+    <com.savvyapps.togglebuttonlayout.ToggleButtonLayout
+            android:id="@+id/propertiesToggleButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:selectedColor="?attr/colorAccent"
+            app:menu="@menu/toggle"
+            android:layout_marginTop="8dp"
+            app:layout_constraintTop_toBottomOf="@+id/editText3" app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="8dp" app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="8dp"/>
 </android.support.constraint.ConstraintLayout>
