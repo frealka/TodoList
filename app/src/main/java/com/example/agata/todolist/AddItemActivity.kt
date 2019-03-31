@@ -72,7 +72,7 @@ class AddItemActivity : AppCompatActivity() {
         taskIntent.putExtra("content", contentEditText.text.toString())
         taskIntent.putExtra("priority", selectedProperty[0].title.toString())
         Log.d(TAG, "intent created")
-        setResult(Activity.RESULT_OK, intent)
+        setResult(Activity.RESULT_OK, taskIntent)
         finish()
     }
 }
