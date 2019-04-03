@@ -9,7 +9,7 @@ class CardItem(val title: String,
                val content: String,
                val deadline: String,
                val taskPriority: String) : Parcelable{
-    var deadlineTime : LocalDate = initDealineTime()
+    var deadlineTime : LocalDate = initDeadlineTime()
 
     constructor(parcel: Parcel) : this(
         title = parcel.readString() ?: "",
@@ -17,7 +17,7 @@ class CardItem(val title: String,
         deadline = parcel.readString() ?: "",
         taskPriority = parcel.readString() ?: ""
     ){
-        deadlineTime = initDealineTime()
+        deadlineTime = initDeadlineTime()
     }
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
@@ -41,7 +41,7 @@ class CardItem(val title: String,
         }
     }
 
-    private fun initDealineTime() : LocalDate {
+    private fun initDeadlineTime() : LocalDate {
         return LocalDate.parse(deadline, DateTimeFormatter.ofPattern("dd.MM.yyyy"))
     }
 }
