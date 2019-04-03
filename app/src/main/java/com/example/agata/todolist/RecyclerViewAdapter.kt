@@ -5,8 +5,10 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
 
-class RecyclerViewAdapter(val items : ArrayList<CardItem>, val context: Context) :
+class RecyclerViewAdapter(val context: Context) :
     RecyclerView.Adapter<ItemCardViewHolder>( ) {
+
+    var items : ArrayList<CardItem> = arrayListOf((CardItem("XXX", "YYY", "12.05.2020", "BBB")))
 
     override fun onCreateViewHolder(p0: ViewGroup, p1: Int): ItemCardViewHolder {
         return ItemCardViewHolder(LayoutInflater.from(p0.context), p0)

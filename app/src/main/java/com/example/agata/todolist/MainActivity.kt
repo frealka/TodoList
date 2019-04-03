@@ -10,19 +10,26 @@ import android.util.Log
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
-    private val todoList : ArrayList<CardItem> = arrayListOf()
-
     private lateinit var todoAdapter : RecyclerViewAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        todoList.add(CardItem("XXX", "YYY", "12.05.2020", "BBB"))
-        todoAdapter = RecyclerViewAdapter(todoList, this@MainActivity)
+        todoAdapter = RecyclerViewAdapter(this@MainActivity)
         recyclerView.apply {
             layoutManager = LinearLayoutManager(this@MainActivity)
             adapter = todoAdapter
         }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle?) {
+        super.onSaveInstanceState(outState)
+        outState?.putParcelableArrayList("todoList", todoAdapter.items)
+    }
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle?) {
+        super.onRestoreInstanceState(savedInstanceState)
+        todoAdapter.items = savedInstanceState?.getParcelableArrayList("todoList") ?: arrayListOf()
     }
 
 
