@@ -45,9 +45,6 @@ class MainActivity : AppCompatActivity() {
                     data.getStringExtra("priority")
                 )
                 todoAdapter.insert(item)
-
-                Log.d(TAG, todoAdapter.toString())
-                Log.d(TAG, recyclerView.adapter.toString())
             }
         }
     }

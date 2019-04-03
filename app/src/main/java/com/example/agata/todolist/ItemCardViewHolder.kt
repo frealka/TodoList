@@ -9,7 +9,7 @@ import android.widget.ImageView
 import android.widget.TextView
 
 class ItemCardViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
-        RecyclerView.ViewHolder(inflater.inflate(R.layout.item_card, parent, false)){
+        RecyclerView.ViewHolder(inflater.inflate(R.layout.item_card, parent, false)) {
 
     private var title : TextView? = null
     private var content : TextView? = null

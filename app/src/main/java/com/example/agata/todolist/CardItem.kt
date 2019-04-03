@@ -8,6 +8,4 @@ class CardItem(title: String, content: String, deadline: String, taskPriority: S
     val content = content
     val deadline : LocalDate = LocalDate.parse(deadline, DateTimeFormatter.ofPattern("dd.MM.yyyy"))
     val taskPriority: String = taskPriority
-
-
 }

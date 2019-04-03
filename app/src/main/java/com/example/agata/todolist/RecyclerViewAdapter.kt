@@ -14,6 +14,10 @@ class RecyclerViewAdapter(val items : ArrayList<CardItem>, val context: Context)
 
     override fun onBindViewHolder(p0: ItemCardViewHolder, p1: Int) {
         p0.bind(context, items[p1])
+        p0.itemView.setOnLongClickListener{
+            remove(p1)
+            return@setOnLongClickListener true
+        }
     }
 
     override fun getItemCount(): Int {
@@ -25,9 +29,8 @@ class RecyclerViewAdapter(val items : ArrayList<CardItem>, val context: Context)
         notifyItemInserted(0)
     }
 
-    fun remove(item: CardItem){
-        val pos = items.indexOf(item)
-        items.remove(item)
-        notifyItemRemoved(pos)
+    private fun remove(p1: Int){
+        items.removeAt(p1)
+        notifyItemRemoved(p1)
     }
 }
