@@ -26,7 +26,7 @@ class ItemCardViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
     fun bind(context: Context, cardItem: CardItem){
         title?.text = cardItem.title
         content?.text = cardItem.content
-        deadline?.text = "#TODO"
+        deadline?.text = cardItem.deadline
         priority?.setBackgroundColor(ContextCompat.getColor(context, R.color.colorGreen))
     }
 }

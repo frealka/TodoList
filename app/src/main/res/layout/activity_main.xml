@@ -41,5 +41,5 @@
             android:scaleType="fitXY"
             android:background="@drawable/default_shape" android:layout_marginEnd="16dp"
             app:layout_constraintEnd_toStartOf="@+id/addButton" android:layout_marginBottom="16dp"
-            app:layout_constraintBottom_toBottomOf="parent"/>
+            app:layout_constraintBottom_toBottomOf="parent" android:onClick="sortBy"/>
 </android.support.constraint.ConstraintLayout>

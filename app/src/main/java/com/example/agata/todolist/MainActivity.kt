@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v7.app.AlertDialog
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
 import android.util.Log
@@ -37,6 +38,20 @@ class MainActivity : AppCompatActivity() {
         val newIntent = Intent(this, AddItemActivity::class.java)
         startActivityForResult(newIntent, addItemRequestCode)
 
+    }
+
+    fun sortBy(v: View){
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle("Sort TODOlist by...")
+        builder.setPositiveButton("Deadline in ascending order"){ _, _ ->
+            Log.d("SORT", "sort ascending")
+            todoAdapter.sortAscending()
+        }
+        builder.setNegativeButton("Deadline in descending order"){ _, _ ->
+            Log.d("SORT", "sort descending")
+            todoAdapter.sortDescending()
+        }
+        builder.show()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

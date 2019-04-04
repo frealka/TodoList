@@ -26,6 +26,16 @@ class RecyclerViewAdapter(val context: Context) :
         return items.size
     }
 
+    fun sortAscending(){
+        items = ArrayList(items.sortedWith(compareBy({it.deadline})))
+        notifyDataSetChanged()
+    }
+
+    fun sortDescending(){
+        items = ArrayList(items.sortedWith(compareBy({it.deadline})).reversed())
+        notifyDataSetChanged()
+    }
+
     fun insert(item: CardItem){
         items.add(0, item)
         notifyItemInserted(0)
