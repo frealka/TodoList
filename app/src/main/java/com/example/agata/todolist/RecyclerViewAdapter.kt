@@ -1,14 +1,21 @@
 package com.example.agata.todolist
 
 import android.content.Context
+import android.content.SharedPreferences
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 
 class RecyclerViewAdapter(val context: Context) :
-    RecyclerView.Adapter<ItemCardViewHolder>( ) {
+    RecyclerView.Adapter<ItemCardViewHolder>() {
 
     var items : ArrayList<CardItem> = arrayListOf((CardItem("XXX", "YYY", "12.05.2020", "BBB")))
+
+    init {
+        loadData()
+    }
 
     override fun onCreateViewHolder(p0: ViewGroup, p1: Int): ItemCardViewHolder {
         return ItemCardViewHolder(LayoutInflater.from(p0.context), p0)
@@ -44,5 +51,13 @@ class RecyclerViewAdapter(val context: Context) :
     private fun remove(p1: Int){
         items.removeAt(p1)
         notifyItemRemoved(p1)
+    }
+
+    private fun loadData(){
+        val sharedPref : SharedPreferences = context.getSharedPreferences("appData", Context.MODE_PRIVATE)
+        val gson = Gson()
+        val json : String? = sharedPref.getString("cardItemString", null)
+        items = gson.fromJson<ArrayList<CardItem>>(json, object : TypeToken<ArrayList<CardItem>>() {}.type) ?: arrayListOf()
+        notifyDataSetChanged()
     }
 }

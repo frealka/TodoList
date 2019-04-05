@@ -1,14 +1,19 @@
 package com.example.agata.todolist
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.app.AlertDialog
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
 import android.util.Log
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import kotlinx.android.synthetic.main.activity_main.*
+import java.lang.reflect.Type
 
 class MainActivity : AppCompatActivity() {
     private lateinit var todoAdapter : RecyclerViewAdapter
@@ -69,6 +74,20 @@ class MainActivity : AppCompatActivity() {
                 todoAdapter.insert(item)
             }
         }
+    }
+
+    override fun onPause() {
+        super.onPause()
+        saveData()
+    }
+
+    private fun saveData(){
+        val sharedPref : SharedPreferences = getSharedPreferences("appData", Context.MODE_PRIVATE)
+        val editor : SharedPreferences.Editor = sharedPref.edit()
+        val gson = Gson()
+        val json: String = gson.toJson(todoAdapter.items)
+        editor.putString("cardItemString", json)
+        editor.apply()
     }
 
     companion object {
