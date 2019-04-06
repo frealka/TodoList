@@ -16,10 +16,9 @@
             app:menu="@menu/img_toggle"
             app:multipleSelection="false"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
             android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="16dp" app:layout_constraintTop_toBottomOf="@+id/priorityToggleButton"/>
+            app:layout_constraintStart_toEndOf="@+id/contentEditText" android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp" app:layout_constraintTop_toBottomOf="@+id/priorityToggleButton"/>
     <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -37,10 +36,9 @@
             android:maxLines="10"
             android:ems="12"
             android:layout_height="wrap_content"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:id="@+id/contentEditText"
-            android:layout_marginEnd="8dp"
-            app:layout_constraintEnd_toEndOf="parent" android:layout_marginStart="8dp"
+            android:layout_marginStart="8dp"
             app:layout_constraintStart_toStartOf="parent"
             android:layout_marginTop="8dp" app:layout_constraintTop_toBottomOf="@+id/deadlineEditText"/>
     <ImageButton
@@ -73,8 +71,8 @@
             app:selectedColor="?attr/colorAccent"
             app:menu="@menu/toggle"
             app:multipleSelection="false"
-            android:layout_marginTop="8dp"
-            app:layout_constraintTop_toBottomOf="@+id/contentEditText" app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginEnd="8dp" app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginStart="8dp"/>
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="8dp"
+            app:layout_constraintStart_toEndOf="@+id/contentEditText" android:layout_marginStart="8dp"
+            android:layout_marginTop="32dp" app:layout_constraintTop_toBottomOf="@+id/taskEditText"/>
 </android.support.constraint.ConstraintLayout>

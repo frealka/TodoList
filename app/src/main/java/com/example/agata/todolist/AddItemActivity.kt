@@ -67,15 +67,21 @@ class AddItemActivity : AppCompatActivity() {
             return
         }
         // content may be empty
-        val selectedProperty : List<Toggle> = imgsToggleButton.getSelectedToggles()
+        val selectedProperty : List<Toggle> = priorityToggleButton.getSelectedToggles()
         if(selectedProperty.isEmpty()){
             Toast.makeText(this@AddItemActivity, "Set priority", Toast.LENGTH_SHORT).show()
+            return
+        }
+        val selectedType : List<Toggle> = imgsToggleButton.getSelectedToggles()
+        if(selectedType.isEmpty()){
+            Toast.makeText(this@AddItemActivity, "Set type", Toast.LENGTH_SHORT).show()
             return
         }
         taskIntent.putExtra("task", taskEditText.text.toString())
         taskIntent.putExtra("deadline", deadlineEditText.text.toString())
         taskIntent.putExtra("content", contentEditText.text.toString())
         taskIntent.putExtra("priority", selectedProperty[0].title.toString())
+        taskIntent.putExtra("type", selectedType[0].toString())
         Log.d(TAG, "intent created")
         setResult(Activity.RESULT_OK, taskIntent)
         finish()
