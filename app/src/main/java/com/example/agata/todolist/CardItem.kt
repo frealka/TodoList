@@ -8,14 +8,16 @@ import java.time.format.DateTimeFormatter
 class CardItem(val title: String,
                val content: String,
                val deadline: String,
-               val taskPriority: String) : Parcelable{
+               val taskPriority: Int,
+               val type: Int) : Parcelable{
     var deadlineTime : LocalDate = initDeadlineTime()
 
     constructor(parcel: Parcel) : this(
         title = parcel.readString() ?: "",
-        content = parcel.readString() ?: "",
         deadline = parcel.readString() ?: "",
-        taskPriority = parcel.readString() ?: ""
+        content = parcel.readString() ?: "",
+        taskPriority = parcel.readInt(),
+        type = parcel.readInt()
     ){
         deadlineTime = initDeadlineTime()
     }
@@ -24,7 +26,8 @@ class CardItem(val title: String,
         parcel.writeString(title)
         parcel.writeString(content)
         parcel.writeString(deadline)
-        parcel.writeString(taskPriority)
+        parcel.writeInt(taskPriority)
+        parcel.writeInt(type)
     }
 
     override fun describeContents(): Int {

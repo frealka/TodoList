@@ -69,7 +69,8 @@ class MainActivity : AppCompatActivity() {
                     data!!.getStringExtra("task"),
                     data.getStringExtra("content"),
                     data.getStringExtra("deadline"),
-                    data.getStringExtra("priority")
+                    data.getIntExtra("priority", R.color.colorAccent),
+                    data.getIntExtra("type", R.drawable.home_icon)
                 )
                 todoAdapter.insert(item)
             }

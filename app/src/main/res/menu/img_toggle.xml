@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-            android:id="@+id/toggle_left"
+            android:id="@+id/img_toggle_left"
             android:icon="@drawable/computer_icon"
             android:title=""/>
     <item
-            android:id="@+id/toggle_center"
+            android:id="@+id/img_toggle_center"
             android:icon="@drawable/home_icon"
             android:title=""/>
     <item
-            android:id="@+id/toggle_right"
+            android:id="@+id/img_toggle_right"
             android:icon="@drawable/work_icon"
             android:title=""/>
 </menu>

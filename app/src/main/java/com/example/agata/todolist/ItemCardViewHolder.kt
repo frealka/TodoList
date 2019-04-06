@@ -15,18 +15,21 @@ class ItemCardViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
     private var content : TextView? = null
     private var deadline : TextView? = null
     private var priority : ImageView? = null
+    private var typeImg : ImageView? = null
 
     init{
         title = itemView.findViewById(R.id.titleTextView)
         content = itemView.findViewById(R.id.contentTextView)
         deadline = itemView.findViewById(R.id.deadlineTextView)
         priority = itemView.findViewById(R.id.cardImageView)
+        typeImg = itemView.findViewById(R.id.typeImageView)
     }
 
     fun bind(context: Context, cardItem: CardItem){
         title?.text = cardItem.title
         content?.text = cardItem.content
         deadline?.text = cardItem.deadline
-        priority?.setBackgroundColor(ContextCompat.getColor(context, R.color.colorGreen))
+        priority?.setBackgroundColor(ContextCompat.getColor(context, cardItem.taskPriority))
+        typeImg?.setImageResource(cardItem.type)
     }
 }

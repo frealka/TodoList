@@ -77,11 +77,22 @@ class AddItemActivity : AppCompatActivity() {
             Toast.makeText(this@AddItemActivity, "Set type", Toast.LENGTH_SHORT).show()
             return
         }
+        val toDraw = when(selectedType[0].id){
+            R.id.img_toggle_left -> R.drawable.computer_icon
+            R.id.img_toggle_center -> R.drawable.home_icon
+            else -> R.drawable.work_icon
+        }
+        val priorityColor = when(selectedProperty[0].id){
+            R.id.toggle_left -> R.color.colorGreen
+            R.id.toggle_center -> R.color.colorAccent
+            else -> R.color.colorRed
+        }
+
         taskIntent.putExtra("task", taskEditText.text.toString())
         taskIntent.putExtra("deadline", deadlineEditText.text.toString())
         taskIntent.putExtra("content", contentEditText.text.toString())
-        taskIntent.putExtra("priority", selectedProperty[0].title.toString())
-        taskIntent.putExtra("type", selectedType[0].toString())
+        taskIntent.putExtra("priority", priorityColor)
+        taskIntent.putExtra("type", toDraw)
         Log.d(TAG, "intent created")
         setResult(Activity.RESULT_OK, taskIntent)
         finish()
