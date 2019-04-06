@@ -11,7 +11,7 @@ import com.google.gson.reflect.TypeToken
 class RecyclerViewAdapter(val context: Context) :
     RecyclerView.Adapter<ItemCardViewHolder>() {
 
-    var items : ArrayList<CardItem> = arrayListOf((CardItem("XXX", "YYY", "12.05.2020", "BBB")))
+    var items : ArrayList<CardItem> = arrayListOf()
 
     init {
         loadData()
@@ -56,7 +56,7 @@ class RecyclerViewAdapter(val context: Context) :
     private fun loadData(){
         val sharedPref : SharedPreferences = context.getSharedPreferences("appData", Context.MODE_PRIVATE)
         val gson = Gson()
-        val json : String? = sharedPref.getString("cardItemString", null)
+        val json : String? = sharedPref.getString("cardItemString s", null)
         items = gson.fromJson<ArrayList<CardItem>>(json, object : TypeToken<ArrayList<CardItem>>() {}.type) ?: arrayListOf()
         notifyDataSetChanged()
     }

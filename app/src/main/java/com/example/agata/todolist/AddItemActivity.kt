@@ -46,6 +46,11 @@ class AddItemActivity : AppCompatActivity() {
         deadlineEditText!!.text = sdf.format(cal.time)
     }
 
+    private fun chooseImage(){
+        // otworz okienko z obrazkami
+        // wybierz obrazek przez klikniecie na niego
+    }
+
     fun onDecline(v: View){
         setResult(Activity.RESULT_CANCELED)
         finish()
@@ -62,7 +67,7 @@ class AddItemActivity : AppCompatActivity() {
             return
         }
         // content may be empty
-        val selectedProperty : List<Toggle> = propertiesToggleButton.getSelectedToggles()
+        val selectedProperty : List<Toggle> = imgsToggleButton.getSelectedToggles()
         if(selectedProperty.isEmpty()){
             Toast.makeText(this@AddItemActivity, "Set priority", Toast.LENGTH_SHORT).show()
             return
