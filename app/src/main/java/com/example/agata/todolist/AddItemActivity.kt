@@ -12,6 +12,8 @@ import java.text.SimpleDateFormat
 import java.util.*
 import android.util.Log
 import android.widget.Toast
+import com.savvyapps.togglebuttonlayout.ToggleButtonLayout
+import kotlinx.android.synthetic.main.item_card.*
 
 class AddItemActivity : AppCompatActivity() {
 
@@ -46,9 +48,35 @@ class AddItemActivity : AppCompatActivity() {
         deadlineEditText!!.text = sdf.format(cal.time)
     }
 
-    private fun chooseImage(){
-        // otworz okienko z obrazkami
-        // wybierz obrazek przez klikniecie na niego
+    override fun onSaveInstanceState(outState: Bundle?) {
+        super.onSaveInstanceState(outState)
+        outState?.putString("dateTime", deadlineEditText!!.text.toString())
+        val selectedPrior = priorityToggleButton.getSelectedToggles()
+        if(!selectedPrior.isEmpty()){
+            outState?.putInt("priority", selectedPrior[0].id)
+        }
+
+        val selectedType = imgsToggleButton.getSelectedToggles()
+        if(!selectedType.isEmpty()){
+            outState?.putInt("imgType", selectedType[0].id)
+        }
+    }
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle?) {
+        super.onRestoreInstanceState(savedInstanceState)
+        val deadline = savedInstanceState?.getString("dateTime")
+        if(deadline != null){
+            deadlineEditText.text = deadline
+        }
+
+        checkToggle(priorityToggleButton, savedInstanceState?.getInt("priority", -1))
+        checkToggle(imgsToggleButton, savedInstanceState?.getInt("imgType", -1))
+    }
+
+    private fun checkToggle(toggle: ToggleButtonLayout, id: Int?){
+        if(id!= null && id != -1){
+            toggle.setToggled(id, true)
+        }
     }
 
     fun onDecline(v: View){
