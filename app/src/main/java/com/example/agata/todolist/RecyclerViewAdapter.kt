@@ -56,7 +56,7 @@ class RecyclerViewAdapter(val context: Context) :
     private fun loadData(){
         val sharedPref : SharedPreferences = context.getSharedPreferences("appData", Context.MODE_PRIVATE)
         val gson = Gson()
-        val json : String? = sharedPref.getString("cardItemString s", null)
+        val json : String? = sharedPref.getString("cardItemString", null)
         items = gson.fromJson<ArrayList<CardItem>>(json, object : TypeToken<ArrayList<CardItem>>() {}.type) ?: arrayListOf()
         notifyDataSetChanged()
     }
