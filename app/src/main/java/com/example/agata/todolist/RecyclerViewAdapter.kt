@@ -34,12 +34,12 @@ class RecyclerViewAdapter(val context: Context) :
     }
 
     fun sortAscending(){
-        items = ArrayList(items.sortedWith(compareBy({it.deadline})))
+        items = ArrayList(items.sortedWith(compareBy {it.deadline}))
         notifyDataSetChanged()
     }
 
     fun sortDescending(){
-        items = ArrayList(items.sortedWith(compareBy({it.deadline})).reversed())
+        items = ArrayList(items.sortedWith(compareBy {it.deadline}).reversed())
         notifyDataSetChanged()
     }
 
