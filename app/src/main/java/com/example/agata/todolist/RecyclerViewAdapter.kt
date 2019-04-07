@@ -44,18 +44,18 @@ class RecyclerViewAdapter(val context: Context) :
 
     fun sortAscending(){
         if(filtered){
-            filteredItems = ArrayList(filteredItems.sortedWith(compareBy {it.deadline}))
+            filteredItems = ArrayList(filteredItems.sortedWith(compareBy {it.deadlineTime}))
         } else {
-            items = ArrayList(items.sortedWith(compareBy {it.deadline}))
+            items = ArrayList(items.sortedWith(compareBy {it.deadlineTime}))
         }
         notifyDataSetChanged()
     }
 
     fun sortDescending(){
         if(filtered){
-            filteredItems = ArrayList(filteredItems.sortedWith(compareBy {it.deadline}).reversed())
+            filteredItems = ArrayList(filteredItems.sortedWith(compareBy {it.deadlineTime}).reversed())
         } else {
-            items = ArrayList(items.sortedWith(compareBy {it.deadline}).reversed())
+            items = ArrayList(items.sortedWith(compareBy {it.deadlineTime}).reversed())
         }
         notifyDataSetChanged()
     }
