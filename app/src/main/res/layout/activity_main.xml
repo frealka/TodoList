@@ -19,6 +19,15 @@
     <ImageButton
             android:layout_width="50dp"
             android:layout_height="50dp"
+            app:srcCompat="@drawable/find_icon"
+            android:id="@+id/searchButton"
+            android:scaleType="fitCenter"
+            android:background="@drawable/default_shape" android:layout_marginEnd="16dp"
+            app:layout_constraintEnd_toStartOf="@+id/propertiesButton" android:layout_marginBottom="16dp"
+            app:layout_constraintBottom_toBottomOf="parent" android:onClick="filterList"/>
+    <ImageButton
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             app:srcCompat="@drawable/plus_icon"
             android:id="@+id/addButton"
             android:scaleType="fitXY"

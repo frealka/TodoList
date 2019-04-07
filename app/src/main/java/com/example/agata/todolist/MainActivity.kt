@@ -11,9 +11,7 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.View
 import android.util.Log
 import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
 import kotlinx.android.synthetic.main.activity_main.*
-import java.lang.reflect.Type
 
 class MainActivity : AppCompatActivity() {
     private lateinit var todoAdapter : RecyclerViewAdapter
@@ -89,6 +87,22 @@ class MainActivity : AppCompatActivity() {
         val json: String = gson.toJson(todoAdapter.items)
         editor.putString("cardItemString", json)
         editor.apply()
+    }
+
+    fun filterList(v: View){
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle("Filter by...")
+            .setItems(R.array.elemTypes
+            ) { dialog, which ->
+                when(which){
+                    0 -> todoAdapter.filterItems(R.drawable.work_icon)
+                    1 -> todoAdapter.filterItems(R.drawable.home_icon)
+                    2 -> todoAdapter.filterItems(R.drawable.computer_icon)
+                    else -> todoAdapter.filterItems(-1)
+                }
+            }
+        builder.create()
+        builder.show()
     }
 
     companion object {
