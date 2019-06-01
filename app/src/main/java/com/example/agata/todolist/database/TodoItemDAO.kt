@@ -28,4 +28,12 @@ interface TodoItemDAO {
     @Delete
     fun delete(t: CardItem)
 
+    /**
+     * Select from table
+     *
+     * @param pattern Pattern to be found
+     */
+    @Query("SELECT * FROM todoItems WHERE title LIKE :pattern")
+    fun search(pattern : String) : List<CardItem>
+
 }

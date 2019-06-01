@@ -102,4 +102,9 @@ class RecyclerViewAdapter(
         }
         notifyDataSetChanged()
     }
+
+    fun setSearchedItems(newItems : MutableList<CardItem>){
+        items = newItems
+        notifyDataSetChanged()
+    }
 }

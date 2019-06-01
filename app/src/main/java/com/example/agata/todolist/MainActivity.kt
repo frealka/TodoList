@@ -9,8 +9,10 @@ import android.support.v7.app.AlertDialog
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
 import android.util.Log
+import android.widget.EditText
 import com.example.agata.todolist.database.AppDatabase
 import com.example.agata.todolist.database.DbWorker
+import com.example.agata.todolist.recycler.CardItem
 import com.example.agata.todolist.recycler.RecyclerViewAdapter
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -80,5 +82,37 @@ class MainActivity : AppCompatActivity() {
             }
         builder.create()
         builder.show()
+    }
+
+    fun search(v: View){
+        val dialogBuilder = AlertDialog.Builder(this)
+        val inflater = this.layoutInflater
+        val dialogView = inflater.inflate(R.layout.custom_dialog, null)
+        dialogBuilder.setView(dialogView)
+
+        val edt = dialogView.findViewById(R.id.edit1) as EditText
+
+        dialogBuilder.setTitle("Search")
+        dialogBuilder.setMessage("Enter title to search below")
+        dialogBuilder.setPositiveButton("Done") { _, _ ->
+            val task = Runnable{
+                val pattern = edt.text.toString()
+                var result :List<CardItem>? = null
+                result = if(pattern.isEmpty()){
+                    mDb?.todoItemsDAO()?.getAllItems() ?: listOf()
+                } else{
+                    mDb?.todoItemsDAO()?.search(pattern) ?: listOf()
+                }
+                mUiHandler.post{
+                    todoAdapter.setSearchedItems(result!!.toMutableList())
+                }
+            }
+            mDbWorker.postTask(task)
+        }
+        dialogBuilder.setNegativeButton("Cancel") { _, _ ->
+            //pass
+        }
+        val b = dialogBuilder.create()
+        b.show()
     }
 }
