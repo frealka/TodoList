@@ -1,4 +1,4 @@
-package com.example.agata.todolist
+package com.example.agata.todolist.recycler
 
 import android.content.Context
 import android.support.v4.content.ContextCompat
@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import com.example.agata.todolist.R
 
 class ItemCardViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
         RecyclerView.ViewHolder(inflater.inflate(R.layout.item_card, parent, false)) {

@@ -1,26 +1,30 @@
-package com.example.agata.todolist
+package com.example.agata.todolist.recycler
 
+import android.arch.persistence.room.ColumnInfo
+import android.arch.persistence.room.Entity
+import android.arch.persistence.room.PrimaryKey
 import android.os.Parcel
 import android.os.Parcelable
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
-class CardItem(val title: String,
-               val content: String,
-               val deadline: String,
-               val taskPriority: Int,
-               val type: Int) : Parcelable{
-    var deadlineTime : LocalDate = initDeadlineTime()
-
+@Entity(tableName = "todoItems")
+class CardItem(
+    @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name = "id") val id : Long = 0,
+    @ColumnInfo(name = "title") val title: String,
+    @ColumnInfo(name = "content") val content: String,
+    @ColumnInfo(name = "deadline") val deadline: String,
+    @ColumnInfo(name = "taskPriority") val taskPriority: Int,
+    @ColumnInfo(name = "type") val type: Int
+) : Parcelable{
     constructor(parcel: Parcel) : this(
         title = parcel.readString() ?: "",
         deadline = parcel.readString() ?: "",
         content = parcel.readString() ?: "",
         taskPriority = parcel.readInt(),
         type = parcel.readInt()
-    ){
-        deadlineTime = initDeadlineTime()
-    }
+    )
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeString(title)
@@ -44,7 +48,7 @@ class CardItem(val title: String,
         }
     }
 
-    private fun initDeadlineTime() : LocalDate {
+    fun getDeadlineTime() : LocalDate {
         return LocalDate.parse(deadline, DateTimeFormatter.ofPattern("dd.MM.yyyy"))
     }
 }

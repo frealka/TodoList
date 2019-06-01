@@ -1,46 +1,55 @@
 package com.example.agata.todolist
 
-import android.app.Activity
 import android.content.Context
 import android.content.Intent
-import android.content.SharedPreferences
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
 import android.support.v7.app.AlertDialog
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
 import android.util.Log
-import com.google.gson.Gson
+import com.example.agata.todolist.database.AppDatabase
+import com.example.agata.todolist.database.DbWorker
+import com.example.agata.todolist.recycler.RecyclerViewAdapter
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
     private lateinit var todoAdapter : RecyclerViewAdapter
+    private var mDb : AppDatabase? = null
+
+    companion object {
+        lateinit var mDbWorker: DbWorker
+        val mUiHandler = Handler()
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        todoAdapter = RecyclerViewAdapter(this@MainActivity)
-        recyclerView.apply {
-            layoutManager = LinearLayoutManager(this@MainActivity)
-            adapter = todoAdapter
+
+        mDbWorker = DbWorker("dbWorkerThread")
+        mDbWorker.start()
+        mDb = this.let { AppDatabase.getInstance(it) }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        val task = Runnable {
+            val items = mDb?.todoItemsDAO()?.getAllItems() ?: mutableListOf()
+            todoAdapter = RecyclerViewAdapter(items, this@MainActivity)
+            mUiHandler.post{
+                recyclerView.apply {
+                    layoutManager = LinearLayoutManager(this@MainActivity)
+                    adapter = todoAdapter
+                }
+            }
         }
+        mDbWorker.postTask(task)
     }
-
-    override fun onSaveInstanceState(outState: Bundle?) {
-        super.onSaveInstanceState(outState)
-        outState?.putParcelableArrayList("todoList", todoAdapter.items)
-    }
-
-    override fun onRestoreInstanceState(savedInstanceState: Bundle?) {
-        super.onRestoreInstanceState(savedInstanceState)
-        todoAdapter.items = savedInstanceState?.getParcelableArrayList("todoList") ?: arrayListOf()
-    }
-
 
     fun addItem(v: View){
         val newIntent = Intent(this, AddItemActivity::class.java)
-        startActivityForResult(newIntent, addItemRequestCode)
-
+        startActivity(newIntent)
     }
 
     fun sortBy(v: View){
@@ -57,43 +66,11 @@ class MainActivity : AppCompatActivity() {
         builder.show()
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if(requestCode == addItemRequestCode){
-            if (resultCode == Activity.RESULT_OK){
-                Log.d(TAG, "otrzymałem informację o kodzie $addItemRequestCode")
-                // create recycler item
-                val item = CardItem(
-                    data!!.getStringExtra("task"),
-                    data.getStringExtra("content"),
-                    data.getStringExtra("deadline"),
-                    data.getIntExtra("priority", R.color.colorAccent),
-                    data.getIntExtra("type", R.drawable.home_icon)
-                )
-                todoAdapter.insert(item)
-            }
-        }
-    }
-
-    override fun onPause() {
-        super.onPause()
-        saveData()
-    }
-
-    private fun saveData(){
-        val sharedPref : SharedPreferences = getSharedPreferences("appData", Context.MODE_PRIVATE)
-        val editor : SharedPreferences.Editor = sharedPref.edit()
-        val gson = Gson()
-        val json: String = gson.toJson(todoAdapter.items)
-        editor.putString("cardItemString", json)
-        editor.apply()
-    }
-
     fun filterList(v: View){
         val builder = AlertDialog.Builder(this)
         builder.setTitle("Filter by...")
             .setItems(R.array.elemTypes
-            ) { dialog, which ->
+            ) { _, which ->
                 when(which){
                     0 -> todoAdapter.filterItems(R.drawable.work_icon)
                     1 -> todoAdapter.filterItems(R.drawable.home_icon)
@@ -103,10 +80,5 @@ class MainActivity : AppCompatActivity() {
             }
         builder.create()
         builder.show()
-    }
-
-    companion object {
-        const val addItemRequestCode: Int = 134
-        const val TAG: String = "MainActivity"
     }
 }

@@ -5,6 +5,7 @@ import android.app.DatePickerDialog
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.support.v7.widget.LinearLayoutManager
 import android.view.View
 import com.savvyapps.togglebuttonlayout.Toggle
 import kotlinx.android.synthetic.main.activity_add_item.*
@@ -12,14 +13,17 @@ import java.text.SimpleDateFormat
 import java.util.*
 import android.util.Log
 import android.widget.Toast
+import com.example.agata.todolist.database.AppDatabase
+import com.example.agata.todolist.database.DbWorker
+import com.example.agata.todolist.recycler.CardItem
+import com.example.agata.todolist.recycler.RecyclerViewAdapter
 import com.savvyapps.togglebuttonlayout.ToggleButtonLayout
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.item_card.*
 
 class AddItemActivity : AppCompatActivity() {
 
     private val cal : Calendar = Calendar.getInstance()
-
-    private val TAG : String = "AddItemActivity"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -85,7 +89,6 @@ class AddItemActivity : AppCompatActivity() {
     }
 
     fun onAccept(v: View){
-        val taskIntent = Intent()
         if(taskEditText.text.isEmpty()){
             Toast.makeText(this@AddItemActivity, "Set task title", Toast.LENGTH_SHORT).show()
             return
@@ -116,13 +119,22 @@ class AddItemActivity : AppCompatActivity() {
             else -> R.color.colorRed
         }
 
-        taskIntent.putExtra("task", taskEditText.text.toString())
-        taskIntent.putExtra("deadline", deadlineEditText.text.toString())
-        taskIntent.putExtra("content", contentEditText.text.toString())
-        taskIntent.putExtra("priority", priorityColor)
-        taskIntent.putExtra("type", toDraw)
-        Log.d(TAG, "intent created")
-        setResult(Activity.RESULT_OK, taskIntent)
+        val cardItem = CardItem(0,
+            taskEditText.text.toString(),
+            contentEditText.text.toString(),
+            deadlineEditText.text.toString(),
+            priorityColor,
+            toDraw)
+
+        // add to database
+        val mDbWorker = DbWorker("dbWorkerThread")
+        val mDb = this.let { AppDatabase.getInstance(it) }
+        mDbWorker.start()
+
+        val task = Runnable {
+            mDb.todoItemsDAO().insertAll(cardItem)
+        }
+        mDbWorker.postTask(task)
         finish()
     }
 }
