@@ -1,25 +1,23 @@
 package com.example.agata.todolist
 
-import android.app.Activity
-import android.app.DatePickerDialog
+import android.util.Log
+import android.app.*
+import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.LinearLayoutManager
 import android.view.View
 import com.savvyapps.togglebuttonlayout.Toggle
 import kotlinx.android.synthetic.main.activity_add_item.*
 import java.text.SimpleDateFormat
 import java.util.*
-import android.util.Log
 import android.widget.Toast
 import com.example.agata.todolist.database.AppDatabase
 import com.example.agata.todolist.database.DbWorker
 import com.example.agata.todolist.recycler.CardItem
-import com.example.agata.todolist.recycler.RecyclerViewAdapter
 import com.savvyapps.togglebuttonlayout.ToggleButtonLayout
-import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.item_card.*
+import java.sql.Timestamp
 
 class AddItemActivity : AppCompatActivity() {
 
@@ -28,6 +26,7 @@ class AddItemActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_item)
+        createChannel()
 
         val dateSetListener = DatePickerDialog.OnDateSetListener { _, year, month, dayOfMonth ->
             cal.set(Calendar.YEAR, year)
@@ -119,13 +118,13 @@ class AddItemActivity : AppCompatActivity() {
             else -> R.color.colorRed
         }
 
-        val cardItem = CardItem(0,
-            taskEditText.text.toString(),
-            contentEditText.text.toString(),
-            deadlineEditText.text.toString(),
-            priorityColor,
-            toDraw)
-
+        val cardItem = CardItem(
+            id = 0,
+            title = taskEditText.text.toString(),
+            content = contentEditText.text.toString(),
+            deadline = deadlineEditText.text.toString(),
+            taskPriority = priorityColor,
+            type = toDraw)
         // add to database
         val mDbWorker = DbWorker("dbWorkerThread")
         val mDb = this.let { AppDatabase.getInstance(it) }
@@ -133,8 +132,53 @@ class AddItemActivity : AppCompatActivity() {
 
         val task = Runnable {
             mDb.todoItemsDAO().insertAll(cardItem)
+            val id = mDb.todoItemsDAO().getLargestId()
+            //should be time from cardItem deadline
+            setAlarm(this, Calendar.getInstance().timeInMillis+10000, id)
         }
         mDbWorker.postTask(task)
+
+        // start service
+        Log.d("notification", "intent service created")
         finish()
+    }
+
+    private fun createChannel(){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val name = getString(R.string.channel_name)
+            val descriptionText = "Simple notification channel"
+            val importance = NotificationManager.IMPORTANCE_DEFAULT
+            val channel = NotificationChannel(MainActivity.CHANNEL_ID, name, importance).apply {
+                description = descriptionText
+            }
+            // Register the channel with the system
+            val notificationManager: NotificationManager =
+                getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            notificationManager.createNotificationChannel(channel)
+        }
+    }
+
+    companion object{
+        val NOTIFY_ID = 134
+
+        @JvmStatic
+        fun setAlarm(context: Context, timestamp: Long, id: Int){
+            Log.d("NOTIFICATION::", "set alarm")
+            val newIntent = Intent(context, NotificationReceiver::class.java)
+            newIntent.putExtra("id", id)
+
+            val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+            val pendingIntent = PendingIntent.getBroadcast(
+                context,
+                NOTIFY_ID,
+                newIntent,
+                PendingIntent.FLAG_CANCEL_CURRENT
+            )
+            alarmManager.set(
+                AlarmManager.RTC_WAKEUP,
+                timestamp,
+                pendingIntent
+            )
+        }
     }
 }

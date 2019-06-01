@@ -36,4 +36,9 @@ interface TodoItemDAO {
     @Query("SELECT * FROM todoItems WHERE title LIKE :pattern")
     fun search(pattern : String) : List<CardItem>
 
+    @Query("SELECT max(id) FROM todoItems")
+    fun getLargestId() : Int
+
+    @Query("SELECT * FROM todoItems WHERE id = :ID")
+    fun getById(ID: Int) : CardItem
 }

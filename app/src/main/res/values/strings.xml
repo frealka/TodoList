@@ -19,4 +19,7 @@
         <item>"studies"</item>
         <item>"all"</item>
     </string-array>
+
+    <string name="channel_name">todoListChannel</string>
+    <string name="notification_channel_description">ToDoList application notification channel.</string>
 </resources>

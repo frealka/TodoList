@@ -11,7 +11,7 @@ import java.time.format.DateTimeFormatter
 @Entity(tableName = "todoItems")
 class CardItem(
     @PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name = "id") val id : Long = 0,
+    @ColumnInfo(name = "id") val id : Int = 0,
     @ColumnInfo(name = "title") val title: String,
     @ColumnInfo(name = "content") val content: String,
     @ColumnInfo(name = "deadline") val deadline: String,
@@ -20,8 +20,8 @@ class CardItem(
 ) : Parcelable{
     constructor(parcel: Parcel) : this(
         title = parcel.readString() ?: "",
-        deadline = parcel.readString() ?: "",
         content = parcel.readString() ?: "",
+        deadline = parcel.readString() ?: "",
         taskPriority = parcel.readInt(),
         type = parcel.readInt()
     )

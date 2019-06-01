@@ -40,8 +40,10 @@ class RecyclerViewAdapter(
             val toDelete = items[p1]
             val task = Runnable {
                 Log.d("DEBUG", mDb.todoItemsDAO().getAllItems().size.toString())
+                Log.d("REMOVED ID", toDelete.id.toString())
                 mDb.todoItemsDAO().delete(toDelete)
             }
+
             mDbWorker.postTask(task)
             remove(toDelete)
             return@setOnLongClickListener true

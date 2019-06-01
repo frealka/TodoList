@@ -1,6 +1,5 @@
 package com.example.agata.todolist
 
-import android.content.Context
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
@@ -20,9 +19,11 @@ class MainActivity : AppCompatActivity() {
     private lateinit var todoAdapter : RecyclerViewAdapter
     private var mDb : AppDatabase? = null
 
+
     companion object {
         lateinit var mDbWorker: DbWorker
         val mUiHandler = Handler()
+        val CHANNEL_ID = "com.example.agata.todolist.notificationPending"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
